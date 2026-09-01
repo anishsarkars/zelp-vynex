@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import BackgroundVideo from '@/components/BackgroundVideo';
 import Link from 'next/link';
 
 export default function BorrowPage() {
@@ -7,31 +8,14 @@ export default function BorrowPage() {
 
   return (
     <>
-      <div className="page-bg" aria-hidden="true">
-        <video
-          className="page-video"
-          id="pageVideo"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          onCanPlay={(e) => (e.currentTarget as HTMLVideoElement).classList.add('ready')}
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260815_075403_f5e02d94-0311-4ff3-bedb-81dc78803882.mp4"
-        />
-      </div>
+      <BackgroundVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" />
       <div className="page-scrim" aria-hidden="true" />
 
       {/* ===== NAV ===== */}
       <header className="nav" id="nav">
         <div className="wrap nav-inner">
           <Link className="brand" href="/">
-            <span className="brand-mark" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 22H22L12 2Z" fill="#c9dcc1" opacity="0.8"/>
-                <line x1="1" y1="8" x2="15" y2="8" stroke="#c9dcc1" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </span>
+            <img src="/logo.png" alt="Zelp Logo" className="brand-mark" style={{ padding: 0, objectFit: 'cover' }} />
             <span className="brand-name">Zelp</span>
           </Link>
 

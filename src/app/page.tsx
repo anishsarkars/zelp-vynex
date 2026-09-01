@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import BackgroundVideo from '@/components/BackgroundVideo';
 
 const assets = [
   { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true },
@@ -48,32 +49,14 @@ export default function ZelpLanding() {
 
   return (
     <>
-      {/* Fixed meadow background with video */}
-      <div className="page-bg" aria-hidden="true">
-        <video
-          className="page-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          onCanPlay={(e) => (e.currentTarget as HTMLVideoElement).classList.add('ready')}
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260815_075403_f5e02d94-0311-4ff3-bedb-81dc78803882.mp4"
-        />
-      </div>
+      <BackgroundVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" />
       <div className="page-scrim" aria-hidden="true" />
 
       {/* ===== NAV ===== */}
       <header className="nav">
         <div className="wrap nav-inner">
           <a className="brand" href="#">
-            <span className="brand-mark" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="3" fill="#c9dcc1"/>
-                <line x1="8" y1="1" x2="8" y2="15" stroke="#c9dcc1" strokeWidth="1.5" strokeLinecap="round"/>
-                <line x1="1" y1="8" x2="15" y2="8" stroke="#c9dcc1" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </span>
+            <img src="/logo.png" alt="Zelp Logo" className="brand-mark" style={{ padding: 0, objectFit: 'cover' }} />
             <span className="brand-name">Zelp</span>
           </a>
 
@@ -467,13 +450,7 @@ export default function ZelpLanding() {
         <div className="wrap foot-inner">
           <div className="foot-brand">
             <div className="row">
-              <span className="brand-mark" aria-hidden="true" style={{ background: 'var(--green-deep)', display: 'grid', placeItems: 'center', width: 28, height: 28, borderRadius: 9 }}>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="3" fill="#c9dcc1"/>
-                  <line x1="8" y1="1" x2="8" y2="15" stroke="#c9dcc1" strokeWidth="1.5" strokeLinecap="round"/>
-                  <line x1="1" y1="8" x2="15" y2="8" stroke="#c9dcc1" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </span>
+              <img src="/logo.png" alt="Zelp Logo" className="brand-mark" style={{ padding: 0, objectFit: 'cover' }} />
               <span className="brand-name">Zelp</span>
             </div>
             <p>Liquid yield and private markets on Robinhood Chain. Deposit a pool asset, hold a tradeable ERC-20, redeem any block.</p>
