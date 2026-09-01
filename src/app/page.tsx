@@ -1,24 +1,24 @@
-"use client";
 import React, { useState } from 'react';
+import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
 
 const assets = [
-  { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true },
-  { ticker: 'TSLA', name: 'Tesla', price: '$214.20', change: '+1.1%', up: true },
-  { ticker: 'AAPL', name: 'Apple', price: '$228.10', change: '-0.3%', up: false },
-  { ticker: 'MSFT', name: 'Microsoft', price: '$445.60', change: '+0.8%', up: true },
-  { ticker: 'AMZN', name: 'Amazon', price: '$186.40', change: '+1.7%', up: true },
-  { ticker: 'GOOGL', name: 'Alphabet', price: '$178.90', change: '-0.5%', up: false },
-  { ticker: 'META', name: 'Meta', price: '$512.30', change: '+3.1%', up: true },
-  { ticker: 'AMD', name: 'AMD', price: '$148.90', change: '+2.0%', up: true },
-  { ticker: 'AVGO', name: 'Broadcom', price: '$162.40', change: '+0.6%', up: true },
-  { ticker: 'NFLX', name: 'Netflix', price: '$685.20', change: '-1.2%', up: false },
-  { ticker: 'COIN', name: 'Coinbase', price: '$218.40', change: '+4.3%', up: true },
-  { ticker: 'PLTR', name: 'Palantir', price: '$31.80', change: '+1.9%', up: true },
-  { ticker: 'ORCL', name: 'Oracle', price: '$142.10', change: '+0.4%', up: true },
-  { ticker: 'SPY', name: 'S&P 500 ETF', price: '$562.40', change: '+0.7%', up: true },
-  { ticker: 'QQQ', name: 'Nasdaq 100 ETF', price: '$485.10', change: '+1.1%', up: true },
-  { ticker: 'COST', name: 'Costco', price: '$884.20', change: '-0.2%', up: false },
+  { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true, domain: 'nvidia.com' },
+  { ticker: 'TSLA', name: 'Tesla', price: '$214.20', change: '+1.1%', up: true, domain: 'tesla.com' },
+  { ticker: 'AAPL', name: 'Apple', price: '$228.10', change: '-0.3%', up: false, domain: 'apple.com' },
+  { ticker: 'MSFT', name: 'Microsoft', price: '$445.60', change: '+0.8%', up: true, domain: 'microsoft.com' },
+  { ticker: 'AMZN', name: 'Amazon', price: '$186.40', change: '+1.7%', up: true, domain: 'amazon.com' },
+  { ticker: 'GOOGL', name: 'Alphabet', price: '$178.90', change: '-0.5%', up: false, domain: 'google.com' },
+  { ticker: 'META', name: 'Meta', price: '$512.30', change: '+3.1%', up: true, domain: 'meta.com' },
+  { ticker: 'AMD', name: 'AMD', price: '$148.90', change: '+2.0%', up: true, domain: 'amd.com' },
+  { ticker: 'AVGO', name: 'Broadcom', price: '$162.40', change: '+0.6%', up: true, domain: 'broadcom.com' },
+  { ticker: 'NFLX', name: 'Netflix', price: '$685.20', change: '-1.2%', up: false, domain: 'netflix.com' },
+  { ticker: 'COIN', name: 'Coinbase', price: '$218.40', change: '+4.3%', up: true, domain: 'coinbase.com' },
+  { ticker: 'PLTR', name: 'Palantir', price: '$31.80', change: '+1.9%', up: true, domain: 'palantir.com' },
+  { ticker: 'ORCL', name: 'Oracle', price: '$142.10', change: '+0.4%', up: true, domain: 'oracle.com' },
+  { ticker: 'SPY', name: 'S&P 500 ETF', price: '$562.40', change: '+0.7%', up: true, domain: 'spdrs.com' },
+  { ticker: 'QQQ', name: 'Nasdaq 100 ETF', price: '$485.10', change: '+1.1%', up: true, domain: 'invesco.com' },
+  { ticker: 'COST', name: 'Costco', price: '$884.20', change: '-0.2%', up: false, domain: 'costco.com' },
 ];
 
 const stats = [
@@ -30,9 +30,6 @@ const stats = [
 
 export default function ZelpLanding() {
   const [copied, setCopied] = useState(false);
-  const [depositOpen, setDepositOpen] = useState(false);
-  const [depositAmt, setDepositAmt] = useState('');
-  const [depositDone, setDepositDone] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText('Not launched');
@@ -40,15 +37,9 @@ export default function ZelpLanding() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDeposit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!depositAmt) return;
-    setDepositDone(true);
-    setTimeout(() => { setDepositDone(false); setDepositOpen(false); setDepositAmt(''); }, 1800);
-  };
-
   return (
     <>
+      {/* Fixed meadow background with video */}
       <BackgroundVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" />
       <div className="page-scrim" aria-hidden="true" />
 
@@ -76,9 +67,9 @@ export default function ZelpLanding() {
             <a className="nav-x" href="#" aria-label="X / Twitter">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.65l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25h6.816l4.713 6.231 5.461-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
             </a>
-            <button suppressHydrationWarning className="btn btn-primary btn-badge" onClick={() => setDepositOpen(true)}>
+            <Link className="btn btn-primary btn-badge" href="/app">
               Open app <span className="arrow" aria-hidden="true">→</span>
-            </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -99,7 +90,7 @@ export default function ZelpLanding() {
             </p>
 
             <div className="hero-actions">
-              <button suppressHydrationWarning className="btn btn-primary btn-lg" onClick={() => setDepositOpen(true)}>Open the app →</button>
+              <Link className="btn btn-primary btn-lg" href="/app">Open the app →</Link>
               <a className="btn btn-line btn-lg" href="#how">See how it works</a>
             </div>
 
@@ -144,7 +135,7 @@ export default function ZelpLanding() {
               <div className="fc-sym">ys-NVDA</div>
               <div className="fc-amt">Liquid · <span className="up">earning fees</span></div>
             </div>
-            <button className="fc-btn" suppressHydrationWarning onClick={() => setDepositOpen(true)}>Deposit</button>
+            <Link className="fc-btn" href="/app">Deposit</Link>
           </div>
         </div>
       </section>
@@ -328,7 +319,9 @@ export default function ZelpLanding() {
           <div className="stock-grid">
             {assets.map(a => (
               <div className="stock" key={a.ticker}>
-                <div className="stock-logo">{a.ticker.slice(0,3)}</div>
+                <div className="stock-logo" style={{ overflow: 'hidden', padding: 0 }}>
+                  <img src={`https://www.google.com/s2/favicons?domain=${a.domain}&sz=128`} alt={a.ticker} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                </div>
                 <div className="stock-info">
                   <span className="stock-t">{a.ticker}</span>
                   <span className="stock-n">{a.name}</span>
@@ -483,68 +476,6 @@ export default function ZelpLanding() {
         </div>
       </footer>
 
-      {/* ===== DEPOSIT MODAL ===== */}
-      {depositOpen && (
-        <div className="modal-overlay" onClick={() => setDepositOpen(false)}>
-          <div className="modal" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" suppressHydrationWarning onClick={() => setDepositOpen(false)}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-            </button>
-
-            {depositDone ? (
-              <div className="modal-success">
-                <div className="modal-success-icon">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m20 6-11 11-5-5"/></svg>
-                </div>
-                <h3>Deposit confirmed</h3>
-                <p style={{ textAlign: 'center', marginTop: 8 }}>YieldShares minted to your wallet.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleDeposit}>
-                <h3>Deposit into ys-NVDA</h3>
-                <p>Enter the amount of NVDA to deposit into the vault and receive YieldShares.</p>
-
-                <div className="modal-field">
-                  <label htmlFor="depositAmt">Amount (NVDA)</label>
-                  <input
-                    id="depositAmt"
-                    type="number"
-                    min="0"
-                    step="any"
-                    placeholder="0.00"
-                    value={depositAmt}
-                    onChange={e => setDepositAmt(e.target.value)}
-                    autoFocus
-                  />
-                </div>
-
-                <div className="modal-kv">
-                  <div>
-                    <dt>You receive</dt>
-                    <dd>{depositAmt ? (parseFloat(depositAmt) / 1.042).toFixed(4) : '—'} ys-NVDA</dd>
-                  </div>
-                  <div>
-                    <dt>Share price</dt>
-                    <dd>1.042 NVDA / ys-NVDA</dd>
-                  </div>
-                  <div>
-                    <dt>Protocol fee</dt>
-                    <dd>10% of harvested fees only</dd>
-                  </div>
-                  <div>
-                    <dt>Lockup</dt>
-                    <dd>0 blocks</dd>
-                  </div>
-                </div>
-
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '14px 20px' }} suppressHydrationWarning>
-                  Deposit →
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 }

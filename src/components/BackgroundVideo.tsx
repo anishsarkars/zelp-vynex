@@ -17,7 +17,9 @@ export default function BackgroundVideo({ src }: { src: string }) {
 
     video.addEventListener('canplay', onCanPlay);
 
-    if (Hls.isSupported()) {
+    const isHls = src.endsWith('.m3u8');
+
+    if (isHls && Hls.isSupported()) {
       hls = new Hls({
         capLevelToPlayerSize: true,
         maxBufferLength: 30,
@@ -27,9 +29,16 @@ export default function BackgroundVideo({ src }: { src: string }) {
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         video.play().catch(() => {});
       });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // Fallback for native Safari
+    } else if (isHls && video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Fallback for native Safari for HLS
       video.src = src;
+      video.addEventListener('loadedmetadata', () => {
+        video.play().catch(() => {});
+      });
+    } else {
+      // Standard MP4 playback
+      video.src = src;
+      video.load();
       video.addEventListener('loadedmetadata', () => {
         video.play().catch(() => {});
       });
