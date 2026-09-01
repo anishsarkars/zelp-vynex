@@ -1,11 +1,43 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import { listVaults, connectWallet, VaultData } from '@/lib/web3';
+import { APP_CONFIG } from '@/lib/config';
 import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
 
 export default function AppPage() {
   const [activeTab, setActiveTab] = useState<'deposit' | 'redeem'>('deposit');
   const [payMethod, setPayMethod] = useState<'asset' | 'stable'>('asset');
+  
+  const [vaults, setVaults] = useState<VaultData[]>([]);
+  const [loadingVaults, setLoadingVaults] = useState(true);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [signer, setSigner] = useState<ethers.JsonRpcSigner | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const vs = await listVaults(walletAddress || undefined);
+        setVaults(vs);
+      } catch(e) {
+        console.error(e);
+      } finally {
+        setLoadingVaults(false);
+      }
+    }
+    load();
+  }, [walletAddress]);
+
+  async function handleConnect() {
+    try {
+      const c = await connectWallet();
+      setWalletAddress(c.address);
+      setSigner(c.signer);
+    } catch(e: any) {
+      alert(e.message);
+    }
+  }
 
   return (
     <>
@@ -34,7 +66,11 @@ export default function AppPage() {
             <a className="nav-x" href="#" aria-label="Zelp on X" title="Zelp on X" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.65l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25h6.816l4.713 6.231 5.461-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
             </a>
-            <button className="btn btn-primary" id="connectBtn">Connect wallet</button>
+            {walletAddress ? (
+              <span className="btn btn-line" id="walletChip">{walletAddress.substring(0, 6)}...{walletAddress.substring(38)}</span>
+            ) : (
+              <button className="btn btn-primary" id="connectBtn" onClick={handleConnect}>Connect wallet</button>
+            )}
           </div>
         </div>
       </header>
@@ -65,9 +101,43 @@ export default function AppPage() {
                 <span className="sub" style={{ fontSize: '13px', color: 'var(--ink-3)' }}></span>
               </div>
               <div className="panel-body">
-                <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
-                  <p>Reading the chain…</p>
-                </div>
+                {loadingVaults ? (
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                    <p>Reading the chain…</p>
+                  </div>
+                ) : vaults.length === 0 ? (
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                    <b>The factory has no vaults</b>
+                  </div>
+                ) : (
+                  <table className="vault-table">
+                    <thead>
+                      <tr>
+                        <th>Vault</th>
+                        <th className="num hide-sm">Total assets</th>
+                        <th className="num hide-sm">Share price</th>
+                        <th className="num">Your position</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {vaults.map((v, i) => (
+                        <tr key={v.address}>
+                          <td>
+                            <div className="vault-asset">
+                              <span>
+                                <b>{v.symbol}</b>
+                                <small>{v.name}</small>
+                              </span>
+                            </div>
+                          </td>
+                          <td className="num hide-sm">{ethers.formatUnits(v.totalAssets, v.decimals)} {v.assetSymbol}</td>
+                          <td className="num hide-sm">{ethers.formatUnits(v.pricePerShare, v.decimals)}</td>
+                          <td className="num">{v.shares && v.shares > 0n ? ethers.formatUnits(v.shares, v.decimals) : "—"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </section>
 
@@ -87,7 +157,9 @@ export default function AppPage() {
                 <div className="field" style={{ marginBottom: '16px' }}>
                   <label htmlFor="vaultSelect" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Vault</label>
                   <select id="vaultSelect" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontSize: '15px' }}>
-                    <option>No vaults</option>
+                    {vaults.length === 0 ? <option>No vaults</option> : vaults.map((v, i) => (
+                      <option key={v.address} value={i}>{v.symbol} · {v.name}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -109,7 +181,11 @@ export default function AppPage() {
                   <span className="hint" style={{ display: 'block', fontSize: '12.5px', color: 'var(--ink-3)', marginTop: '8px' }}>Connect a wallet to see your balance.</span>
                 </div>
 
-                <button className="btn btn-primary btn-lg" style={{ width: '100%', padding: '16px' }} disabled>Connect wallet</button>
+                {walletAddress ? (
+                  <button className="btn btn-primary btn-lg" style={{ width: '100%', padding: '16px' }}>{activeTab === 'deposit' ? 'Deposit' : 'Redeem'}</button>
+                ) : (
+                  <button className="btn btn-primary btn-lg" style={{ width: '100%', padding: '16px' }} onClick={handleConnect}>Connect wallet</button>
+                )}
 
                 <dl className="kv" style={{ display: 'grid', gap: '12px', background: 'var(--paper)', padding: '20px', borderRadius: '12px', marginTop: '24px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}><dt style={{ fontSize: '14px', color: 'var(--ink-2)' }}>You receive</dt><dd style={{ fontFamily: 'var(--mono)', fontSize: '14px', fontWeight: 600 }}>—</dd></div>
