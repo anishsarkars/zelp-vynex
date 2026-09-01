@@ -5,7 +5,7 @@ export const APP_CONFIG = {
   chain: {
     name: "Robinhood Chain",
     chainId: 4663,
-    rpc: "https://rpc.mainnet.chain.robinhood.com",
+    rpc: "https://robinhood-rpc.publicnode.com",
     rpcs: [
       "https://robinhood-rpc.publicnode.com",
       "https://rpc.mainnet.chain.robinhood.com",
@@ -16,6 +16,9 @@ export const APP_CONFIG = {
 
   vaults: {
     factory: "0xee57E1B9B87Ca4318E046FAE2C45923f61d8D199",
+    extra: [
+      { address: "0x01680B41D61253a61c4C55e897a05D10F280cD2A" }
+    ],
     assets: {
       USDG:  { name: "Global Dollar", decimals: 6 },
       NVDA:  { name: "NVIDIA",        decimals: 18 },

@@ -97,7 +97,13 @@ export async function listVaults(holder?: string): Promise<VaultData[]> {
   const p = getProvider();
   
   const factory = new ethers.Contract(APP_CONFIG.vaults.factory, FACTORY_ABI, p);
-  const addrs: string[] = await factory.allVaults();
+  const factoryAddrs: string[] = await factory.allVaults();
+  
+  // Combine factory vaults with extra routed vaults (like USDG)
+  const addrs = [
+    ...(APP_CONFIG.vaults.extra || []).map(e => e.address),
+    ...factoryAddrs
+  ];
   
   const vaults: VaultData[] = [];
   

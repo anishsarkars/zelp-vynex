@@ -12,16 +12,19 @@ export default function AppPage() {
   
   const [vaults, setVaults] = useState<VaultData[]>([]);
   const [loadingVaults, setLoadingVaults] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [signer, setSigner] = useState<ethers.JsonRpcSigner | null>(null);
 
   useEffect(() => {
     async function load() {
       try {
+        setFetchError(null);
         const vs = await listVaults(walletAddress || undefined);
         setVaults(vs);
-      } catch(e) {
+      } catch(e: any) {
         console.error(e);
+        setFetchError(e.message || "Failed to read from chain.");
       } finally {
         setLoadingVaults(false);
       }
@@ -101,7 +104,12 @@ export default function AppPage() {
                 <span className="sub" style={{ fontSize: '13px', color: 'var(--ink-3)' }}></span>
               </div>
               <div className="panel-body">
-                {loadingVaults ? (
+                {fetchError ? (
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: '#b91c1c', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                    <b>Network Error</b>
+                    <p style={{ marginTop: '8px', fontSize: '14px' }}>{fetchError}</p>
+                  </div>
+                ) : loadingVaults ? (
                   <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
                     <p>Reading the chain…</p>
                   </div>
