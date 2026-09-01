@@ -124,25 +124,43 @@ export default function AppPage() {
                         <th>Vault</th>
                         <th className="num hide-sm">Total assets</th>
                         <th className="num hide-sm">Share price</th>
+                        <th className="num"><span className="wide-only">In your </span>Wallet</th>
                         <th className="num">Your position</th>
+                        <th className="num"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {vaults.map((v, i) => (
-                        <tr key={v.address}>
-                          <td>
-                            <div className="vault-asset">
-                              <span>
-                                <b>{v.symbol}</b>
-                                <small>{v.name}</small>
-                              </span>
-                            </div>
-                          </td>
-                          <td className="num hide-sm">{ethers.formatUnits(v.totalAssets, v.decimals)} {v.assetSymbol}</td>
-                          <td className="num hide-sm">{ethers.formatUnits(v.pricePerShare, v.decimals)}</td>
-                          <td className="num">{v.shares && v.shares > 0n ? ethers.formatUnits(v.shares, v.decimals) : "—"}</td>
-                        </tr>
-                      ))}
+                      {vaults.map((v, i) => {
+                        const totalAssetsFmt = Number(ethers.formatUnits(v.totalAssets, v.decimals)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        const priceFmt = Number(ethers.formatUnits(v.pricePerShare, v.decimals)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 });
+                        const balFmt = v.assetBalance && v.assetBalance > 0n ? Number(ethers.formatUnits(v.assetBalance, v.decimals)).toLocaleString(undefined, { maximumFractionDigits: 4 }) : "0";
+                        const posFmt = v.shares && v.shares > 0n ? Number(ethers.formatUnits(v.shares, v.decimals)).toLocaleString(undefined, { maximumFractionDigits: 4 }) : "—";
+                        
+                        return (
+                          <tr key={v.address}>
+                            <td>
+                              <div className="vault-asset">
+                                <img src={`https://www.google.com/s2/favicons?domain=${v.name.split(' ')[0].toLowerCase()}.com&sz=128`} alt="" loading="lazy" onError={(e) => (e.currentTarget.style.visibility = 'hidden')} />
+                                <span>
+                                  <b>{v.symbol}</b>
+                                  <small>{v.name}</small>
+                                </span>
+                              </div>
+                            </td>
+                            <td className="num hide-sm">{totalAssetsFmt} {v.assetSymbol}</td>
+                            <td className="num hide-sm">{priceFmt}</td>
+                            <td className="num">{walletAddress ? (v.assetBalance && v.assetBalance > 0n ? <b>{balFmt} {v.assetSymbol}</b> : "0") : "—"}</td>
+                            <td className="num">{v.shares && v.shares > 0n ? `${posFmt} ${v.assetSymbol}` : "—"}</td>
+                            <td className="num">
+                              {v.assetBalance && v.assetBalance > 0n ? (
+                                <button className="btn btn-primary btn-sm">Deposit</button>
+                              ) : (
+                                <a className="btn btn-line btn-sm" href={`${APP_CONFIG.chain.explorer}/address/${v.address}`} target="_blank" rel="noopener noreferrer">Contract</a>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 )}
