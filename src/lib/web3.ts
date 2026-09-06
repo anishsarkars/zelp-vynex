@@ -109,10 +109,8 @@ export async function listVaults(holder?: string): Promise<VaultData[]> {
     ...legacyAddrs
   ];
   
-  const vaults: VaultData[] = [];
-  
   // To avoid massive batch limits, we loop and fetch sequentially, or parallel with limits
-  for (const addr of addrs) {
+  const vaultsData = await Promise.all(addrs.map(async (addr) => {
     try {
       const v = new ethers.Contract(addr, VAULT_ABI, p);
       
@@ -124,9 +122,11 @@ export async function listVaults(holder?: string): Promise<VaultData[]> {
       const a = new ethers.Contract(asset, ERC20_ABI, p);
       const assetSymbol = await a.symbol();
       
-      const totalAssets = await v.totalAssets();
-      const totalSupply = await v.totalSupply();
-      const pricePerShare = await v.pricePerShare();
+      const [totalAssets, totalSupply, pricePerShare] = await Promise.all([
+        v.totalAssets(),
+        v.totalSupply(),
+        v.pricePerShare()
+      ]);
       
       let feeBps = 0;
       try { feeBps = Number(await v.feeBps()); } catch(e) { 
@@ -151,7 +151,7 @@ export async function listVaults(holder?: string): Promise<VaultData[]> {
         }
       }
       
-      vaults.push({
+      return {
         address: addr,
         asset,
         assetSymbol,
@@ -166,11 +166,12 @@ export async function listVaults(holder?: string): Promise<VaultData[]> {
         assetBalance,
         worth,
         earning
-      });
+      } as VaultData;
     } catch(err) {
       console.warn("Failed to fetch vault", addr, err);
+      return null;
     }
-  }
+  }));
   
-  return vaults;
+  return vaultsData.filter(v => v !== null) as VaultData[];
 }

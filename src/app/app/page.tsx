@@ -82,7 +82,7 @@ export default function AppPage() {
             <div style={{ maxWidth: '640px' }}>
               <h1 style={{ fontFamily: 'var(--serif)', fontSize: '42px', fontWeight: 400, letterSpacing: '-0.02em', marginBottom: '16px' }}>YieldShares</h1>
               <p style={{ fontSize: '16px', color: 'var(--ink-2)', lineHeight: 1.6, marginBottom: '16px' }}>Deposit a pool asset, hold a tradeable ERC-20, redeem at the on-chain price. Every figure below is read from <span>Robinhood Chain</span>.</p>
-              <p className="app-hint" style={{ fontSize: '13.5px', color: 'var(--ink-3)', lineHeight: 1.5, padding: '16px', background: 'rgba(255,255,255,0.4)', borderRadius: '12px', border: '1px solid var(--line-2)' }}><b>Holding USDG?</b> That is the chain's dollar. It has its own vault, <b>ys-USDG</b>, first in the list and already selected in the form. Pick an amount and deposit. You do not need to own a stock.</p>
+              <p className="app-hint" style={{ fontSize: '13.5px', color: 'var(--ink-2)', lineHeight: 1.5, padding: '16px', background: 'rgba(25,25,25,0.6)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}><b>Holding USDG?</b> That is the chain's dollar. It has its own vault, <b>ys-USDG</b>, first in the list and already selected in the form. Pick an amount and deposit. You do not need to own a stock.</p>
             </div>
             <div className="right">
               <span className="pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,.72)', borderRadius: '999px', padding: '7px 15px', fontSize: '13.5px', fontWeight: 500, color: 'var(--ink-2)', backdropFilter: 'var(--blur)' }}>
@@ -102,16 +102,16 @@ export default function AppPage() {
               </div>
               <div className="panel-body">
                 {fetchError ? (
-                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: '#b91c1c', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: '#f87171', background: 'rgba(25,25,25,0.6)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
                     <b>Network Error</b>
                     <p style={{ marginTop: '8px', fontSize: '14px' }}>{fetchError}</p>
                   </div>
                 ) : loadingVaults ? (
-                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-2)', background: 'rgba(25,25,25,0.6)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
                     <p>Reading the chain…</p>
                   </div>
                 ) : vaults.length === 0 ? (
-                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-3)', background: 'rgba(255,255,255,0.3)', borderRadius: '12px' }}>
+                  <div className="empty" style={{ padding: '40px', textAlign: 'center', color: 'var(--ink-2)', background: 'rgba(25,25,25,0.6)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
                     <b>The factory has no vaults</b>
                   </div>
                 ) : (
@@ -136,13 +136,15 @@ export default function AppPage() {
                         return (
                           <tr key={v.address}>
                             <td>
-                              <div className="vault-asset">
-                                <img src={`https://www.google.com/s2/favicons?domain=${v.name.split(' ')[0].toLowerCase()}.com&sz=128`} alt="" loading="lazy" onError={(e) => (e.currentTarget.style.visibility = 'hidden')} />
+                              <a href={`${APP_CONFIG.chain.explorer}/address/${v.asset}`} target="_blank" rel="noopener noreferrer" className="vault-asset" style={{ textDecoration: 'none' }}>
+                                <div className="stock-logo" style={{ overflow: 'hidden', padding: 0 }}>
+                                  <img src={`https://www.google.com/s2/favicons?domain=${v.name.split(' ')[0].toLowerCase()}.com&sz=128`} alt={v.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
+                                </div>
                                 <span>
-                                  <b>{v.symbol}</b>
+                                  <b style={{ transition: 'color 0.2s' }}>{v.symbol}</b>
                                   <small>{v.name}</small>
                                 </span>
-                              </div>
+                              </a>
                             </td>
                             <td className="num hide-sm">{totalAssetsFmt} {v.assetSymbol}</td>
                             <td className="num hide-sm">{priceFmt}</td>
@@ -179,8 +181,8 @@ export default function AppPage() {
               <div className="panel-body animate-in fade-in duration-300">
                 <div className="field" style={{ marginBottom: '16px' }}>
                   <label htmlFor="vaultSelect" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Vault</label>
-                  <select id="vaultSelect" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontSize: '15px' }}>
-                    {vaults.length === 0 ? <option>No vaults</option> : vaults.map((v, i) => (
+                  <select id="vaultSelect" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontSize: '15px' }}>
+                    {loadingVaults ? <option>Loading vaults...</option> : vaults.length === 0 ? <option>No vaults</option> : vaults.map((v, i) => (
                       <option key={v.address} value={i}>{v.symbol} · {v.name}</option>
                     ))}
                   </select>
@@ -200,7 +202,7 @@ export default function AppPage() {
                   <label htmlFor="amountInput" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>
                     {activeTab === 'deposit' ? 'Amount to deposit' : 'Amount to redeem'}
                   </label>
-                  <input id="amountInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
+                  <input id="amountInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
                   <span className="hint" style={{ display: 'block', fontSize: '12.5px', color: 'var(--ink-3)', marginTop: '8px' }}>Connect a wallet to see your balance.</span>
                 </div>
 

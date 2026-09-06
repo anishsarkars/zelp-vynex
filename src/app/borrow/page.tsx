@@ -43,7 +43,7 @@ export default function BorrowPage() {
             <div style={{ maxWidth: '640px' }}>
               <h1 style={{ fontFamily: 'var(--serif)', fontSize: '42px', fontWeight: 400, letterSpacing: '-0.02em', marginBottom: '16px' }}>Borrow</h1>
               <p style={{ fontSize: '16px', color: 'var(--ink-2)', lineHeight: 1.6, marginBottom: '16px' }}>Post a tokenised stock and draw dollars against it without selling. Pay it back whenever you like and the stock was yours the whole time.</p>
-              <p className="app-hint" style={{ fontSize: '13.5px', color: 'var(--ink-3)', lineHeight: 1.5, padding: '16px', background: 'rgba(255,255,255,0.4)', borderRadius: '12px', border: '1px solid var(--line-2)' }}>The position sits on <b>Morpho Blue</b> under <b>your own address</b>, not ours. If this site disappeared tomorrow your position would still be there and you could manage it directly on Morpho.</p>
+              <p className="app-hint" style={{ fontSize: '13.5px', color: 'var(--ink-2)', lineHeight: 1.5, padding: '16px', background: 'rgba(25,25,25,0.6)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>The position sits on <b>Morpho Blue</b> under <b>your own address</b>, not ours. If this site disappeared tomorrow your position would still be there and you could manage it directly on Morpho.</p>
             </div>
             <div className="right">
               <span className="pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,.72)', borderRadius: '999px', padding: '7px 15px', fontSize: '13.5px', fontWeight: 500, color: 'var(--ink-2)', backdropFilter: 'var(--blur)' }}>
@@ -101,21 +101,21 @@ export default function BorrowPage() {
                   <div id="panelBorrow" className="animate-in fade-in duration-300">
                     <div className="field" style={{ marginBottom: '16px' }}>
                       <label htmlFor="collInput" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Collateral to post</label>
-                      <input id="collInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
+                      <input id="collInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
                     </div>
                     <div className="field" style={{ marginBottom: '24px' }}>
                       <label htmlFor="borrowInput" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Dollars to borrow</label>
-                      <input id="borrowInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
+                      <input id="borrowInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
                       <span className="hint" style={{ display: 'block', fontSize: '12.5px', color: 'var(--ink-3)', marginTop: '8px' }}>Leave either box empty to only do the other one.</span>
                     </div>
                     <button className="btn btn-primary btn-lg" id="borrowBtn" style={{ width: '100%', padding: '16px' }}>Post and borrow</button>
 
                     <div className="field" style={{ marginTop: '32px', marginBottom: '16px' }}>
                       <label htmlFor="repayInput" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Repay</label>
-                      <input id="repayInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
+                      <input id="repayInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
                       <span className="hint" style={{ display: 'block', fontSize: '12.5px', color: 'var(--ink-3)', marginTop: '8px' }}>Pay more than you owe and the surplus comes straight back.</span>
                     </div>
-                    <button className="btn" id="repayBtn" style={{ width: '100%', padding: '14px', background: 'rgba(255,255,255,0.8)', border: '1px solid var(--line-2)' }}>Repay</button>
+                    <button className="btn" id="repayBtn" style={{ width: '100%', padding: '14px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--line)' }}>Repay</button>
                     <button className="btn" id="closeBtn" style={{ width: '100%', marginTop: '8px', padding: '14px', background: 'transparent', color: 'var(--down)' }}>Clear the debt and take my stock back</button>
                   </div>
                 ) : (
@@ -126,11 +126,11 @@ export default function BorrowPage() {
                     </p>
                     <div className="field" style={{ marginBottom: '24px' }}>
                       <label htmlFor="supplyInput" style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Dollars to supply</label>
-                      <input id="supplyInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.8)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
+                      <input id="supplyInput" type="text" inputMode="decimal" placeholder="0.0" autoComplete="off" style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(20,20,20,0.8)', color: 'var(--ink)', fontFamily: 'var(--mono)', fontSize: '16px' }} />
                       <span className="hint" style={{ display: 'block', fontSize: '12.5px', color: 'var(--ink-3)', marginTop: '8px' }}>It only earns while somebody is borrowing against it.</span>
                     </div>
                     <button className="btn btn-primary btn-lg" id="supplyBtn" style={{ width: '100%', padding: '16px' }}>Supply</button>
-                    <button className="btn" id="withdrawSupplyBtn" style={{ width: '100%', marginTop: '8px', padding: '14px', background: 'rgba(255,255,255,0.8)', border: '1px solid var(--line-2)' }}>Withdraw everything I supplied</button>
+                    <button className="btn" id="withdrawSupplyBtn" style={{ width: '100%', marginTop: '8px', padding: '14px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--line)' }}>Withdraw everything I supplied</button>
                   </div>
                 )}
 
