@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
 const assets = [
-  { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true, domain: 'nvidia.com' },
-  { ticker: 'TSLA', name: 'Tesla', price: '$214.20', change: '+1.1%', up: true, domain: 'tesla.com' },
-  { ticker: 'AAPL', name: 'Apple', price: '$228.10', change: '-0.3%', up: false, domain: 'apple.com' },
-  { ticker: 'MSFT', name: 'Microsoft', price: '$445.60', change: '+0.8%', up: true, domain: 'microsoft.com' },
-  { ticker: 'AMZN', name: 'Amazon', price: '$186.40', change: '+1.7%', up: true, domain: 'amazon.com' },
-  { ticker: 'GOOGL', name: 'Alphabet', price: '$178.90', change: '-0.5%', up: false, domain: 'google.com' },
-  { ticker: 'META', name: 'Meta', price: '$512.30', change: '+3.1%', up: true, domain: 'meta.com' },
-  { ticker: 'AMD', name: 'AMD', price: '$148.90', change: '+2.0%', up: true, domain: 'amd.com' },
-  { ticker: 'AVGO', name: 'Broadcom', price: '$162.40', change: '+0.6%', up: true, domain: 'broadcom.com' },
-  { ticker: 'NFLX', name: 'Netflix', price: '$685.20', change: '-1.2%', up: false, domain: 'netflix.com' },
-  { ticker: 'COIN', name: 'Coinbase', price: '$218.40', change: '+4.3%', up: true, domain: 'coinbase.com' },
-  { ticker: 'PLTR', name: 'Palantir', price: '$31.80', change: '+1.9%', up: true, domain: 'palantir.com' },
-  { ticker: 'ORCL', name: 'Oracle', price: '$142.10', change: '+0.4%', up: true, domain: 'oracle.com' },
-  { ticker: 'SPY', name: 'S&P 500 ETF', price: '$562.40', change: '+0.7%', up: true, domain: 'spdrs.com' },
-  { ticker: 'QQQ', name: 'Nasdaq 100 ETF', price: '$485.10', change: '+1.1%', up: true, domain: 'invesco.com' },
-  { ticker: 'COST', name: 'Costco', price: '$884.20', change: '-0.2%', up: false, domain: 'costco.com' },
+  { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true, domain: 'nvidia.com', address: '0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC' },
+  { ticker: 'TSLA', name: 'Tesla', price: '$214.20', change: '+1.1%', up: true, domain: 'tesla.com', address: '0x322F0929c4625eD5bAd873c95208D54E1c003b2d' },
+  { ticker: 'AAPL', name: 'Apple', price: '$228.10', change: '-0.3%', up: false, domain: 'apple.com', address: '0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9' },
+  { ticker: 'MSFT', name: 'Microsoft', price: '$445.60', change: '+0.8%', up: true, domain: 'microsoft.com', address: '0xe93237C50D904957Cf27E7B1133b510C669c2e74' },
+  { ticker: 'AMZN', name: 'Amazon', price: '$186.40', change: '+1.7%', up: true, domain: 'amazon.com', address: '0x12f190a9F9d7D37a250758b26824B97CE941bF54' },
+  { ticker: 'GOOGL', name: 'Alphabet', price: '$178.90', change: '-0.5%', up: false, domain: 'google.com', address: '0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3' },
+  { ticker: 'META', name: 'Meta', price: '$512.30', change: '+3.1%', up: true, domain: 'meta.com', address: '0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35' },
+  { ticker: 'AMD', name: 'AMD', price: '$148.90', change: '+2.0%', up: true, domain: 'amd.com', address: '0x86923f96303D656E4aa86D9d42D1e57ad2023fdC' },
+  { ticker: 'AVGO', name: 'Broadcom', price: '$162.40', change: '+0.6%', up: true, domain: 'broadcom.com', address: '0x156E175DD063a8cE274C50654eF40e0032b3fbcF' },
+  { ticker: 'NFLX', name: 'Netflix', price: '$685.20', change: '-1.2%', up: false, domain: 'netflix.com', address: '0xE0444EF8BF4eD74f74FD73686e2ddF4C1c5591E8' },
+  { ticker: 'COIN', name: 'Coinbase', price: '$218.40', change: '+4.3%', up: true, domain: 'coinbase.com', address: '0x6330D8C3178a418788dF01a47479c0ce7CCF450b' },
+  { ticker: 'PLTR', name: 'Palantir', price: '$31.80', change: '+1.9%', up: true, domain: 'palantir.com', address: '0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A' },
+  { ticker: 'ORCL', name: 'Oracle', price: '$142.10', change: '+0.4%', up: true, domain: 'oracle.com', address: '' },
+  { ticker: 'SPY', name: 'S&P 500 ETF', price: '$562.40', change: '+0.7%', up: true, domain: 'spdrs.com', address: '0x117cc2133c37B721F49dE2A7a74833232B3B4C0C' },
+  { ticker: 'QQQ', name: 'Nasdaq 100 ETF', price: '$485.10', change: '+1.1%', up: true, domain: 'invesco.com', address: '0xD5f3879160bc7c32ebb4dC785F8a4F505888de68' },
+  { ticker: 'COST', name: 'Costco', price: '$884.20', change: '-0.2%', up: false, domain: 'costco.com', address: '0x4EA005168D7F09a7A0Ba9D1DEf21a479950E44C2' },
 ];
 
 const stats = [
@@ -315,7 +315,13 @@ export default function ZelpLanding() {
 
           <div className="stock-grid">
             {assets.map(a => (
-              <div className="stock" key={a.ticker}>
+              <a 
+                className="stock" 
+                key={a.ticker} 
+                href={a.address ? `https://robinhoodchain.blockscout.com/address/${a.address}` : '#'}
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
                 <div className="stock-logo" style={{ overflow: 'hidden', padding: 0 }}>
                   <img src={`https://www.google.com/s2/favicons?domain=${a.domain}&sz=128`} alt={a.ticker} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
@@ -327,7 +333,7 @@ export default function ZelpLanding() {
                   {a.price}
                   <span className={`stock-ch ${a.up ? 'ch-up' : 'down'}`}>{a.change}</span>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
