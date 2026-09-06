@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import BackgroundVideo from '@/components/BackgroundVideo';
-
 const assets = [
   { ticker: 'NVDA', name: 'NVIDIA', price: '$128.50', change: '+2.4%', up: true, domain: 'nvidia.com' },
   { ticker: 'TSLA', name: 'Tesla', price: '$214.20', change: '+1.1%', up: true, domain: 'tesla.com' },
@@ -40,8 +38,7 @@ export default function ZelpLanding() {
 
   return (
     <>
-      {/* Fixed meadow background with video */}
-      <BackgroundVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" />
+      <div className="page-bg" aria-hidden="true" />
       <div className="page-scrim" aria-hidden="true" />
 
       {/* ===== NAV ===== */}
