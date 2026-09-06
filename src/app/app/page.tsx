@@ -138,7 +138,7 @@ export default function AppPage() {
                             <td>
                               <a href={`${APP_CONFIG.chain.explorer}/address/${v.asset}`} target="_blank" rel="noopener noreferrer" className="vault-asset" style={{ textDecoration: 'none' }}>
                                 <div className="stock-logo" style={{ overflow: 'hidden', padding: 0 }}>
-                                  <img src={`https://www.google.com/s2/favicons?domain=${v.name.split(' ')[0].toLowerCase()}.com&sz=128`} alt={v.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
+                                  <img src={`https://www.google.com/s2/favicons?domain=${(APP_CONFIG.vaults.assets as any)[v.assetSymbol]?.domain || `${v.name.split(' ')[0].toLowerCase()}.com`}&sz=128`} alt={v.symbol} style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
                                 </div>
                                 <span>
                                   <b style={{ transition: 'color 0.2s' }}>{v.symbol}</b>
