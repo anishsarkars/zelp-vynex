@@ -230,8 +230,8 @@ export default function AppPage() {
           <div className="app-cols">
             
             {/* vault list */}
-            <section className="panel" style={{ background: 'var(--surface)', backdropFilter: 'var(--surface-blur)', borderRadius: 'var(--r)', padding: '32px', boxShadow: 'var(--shadow-sm)' }}>
-              <div className="panel-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '24px' }}>
+            <section className="panel">
+              <div className="panel-head">
                 <h2 style={{ fontFamily: 'var(--serif)', fontSize: '24px', fontWeight: 400 }}>Vaults</h2>
                 <span className="sub" style={{ fontSize: '13px', color: 'var(--ink-3)' }}></span>
               </div>
@@ -302,13 +302,13 @@ export default function AppPage() {
             </section>
 
             {/* deposit / redeem */}
-            <section className="panel" style={{ background: 'var(--surface)', backdropFilter: 'var(--surface-blur)', borderRadius: 'var(--r)', padding: '32px', boxShadow: 'var(--shadow-sm)' }}>
-              <div className="panel-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <section className="panel">
+              <div className="panel-head">
                 <h2 style={{ fontFamily: 'var(--serif)', fontSize: '24px', fontWeight: 400 }}>{activeTab === 'deposit' ? 'Deposit' : 'Redeem'}</h2>
                 <span className="sub">
-                  <span className="tabs" style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.5)', padding: '4px', borderRadius: '999px' }}>
-                    <button onClick={() => { setActiveTab('deposit'); setAmountInput(''); }} className={`btn ${activeTab === 'deposit' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: activeTab === 'deposit' ? '' : 'transparent', color: activeTab === 'deposit' ? '' : 'var(--ink-2)' }}>Deposit</button>
-                    <button onClick={() => { setActiveTab('redeem'); setAmountInput(''); }} className={`btn ${activeTab === 'redeem' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: activeTab === 'redeem' ? '' : 'transparent', color: activeTab === 'redeem' ? '' : 'var(--ink-2)' }}>Redeem</button>
+                  <span className="tabs">
+                    <button onClick={() => { setActiveTab('deposit'); setAmountInput(''); }} className={activeTab === 'deposit' ? 'active' : ''}>Deposit</button>
+                    <button onClick={() => { setActiveTab('redeem'); setAmountInput(''); }} className={activeTab === 'redeem' ? 'active' : ''}>Redeem</button>
                   </span>
                 </span>
               </div>
@@ -326,9 +326,9 @@ export default function AppPage() {
                 {activeTab === 'deposit' && (
                   <div className="field" style={{ marginBottom: '16px' }}>
                     <label style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, marginBottom: '8px' }}>Pay with</label>
-                    <span className="tabs pay-tabs" style={{ display: 'inline-flex', gap: '4px', background: 'rgba(255,255,255,0.5)', padding: '4px', borderRadius: '999px', marginBottom: '8px' }}>
-                      <button onClick={() => setPayMethod('asset')} className={`btn ${payMethod === 'asset' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: payMethod === 'asset' ? '' : 'transparent', color: payMethod === 'asset' ? '' : 'var(--ink-2)' }}>The asset</button>
-                      <button onClick={() => setPayMethod('stable')} className={`btn ${payMethod === 'stable' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: payMethod === 'stable' ? '' : 'transparent', color: payMethod === 'stable' ? '' : 'var(--ink-2)' }}>USDG</button>
+                    <span className="tabs pay-tabs">
+                      <button onClick={() => setPayMethod('asset')} className={payMethod === 'asset' ? 'active' : ''}>The asset</button>
+                      <button onClick={() => setPayMethod('stable')} className={payMethod === 'stable' ? 'active' : ''}>USDG</button>
                     </span>
                   </div>
                 )}

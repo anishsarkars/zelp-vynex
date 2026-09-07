@@ -79,11 +79,11 @@ export default function BorrowPage() {
             </div>
           </div>
 
-          <div className="app-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+          <div className="app-cols">
             
             {/* your position */}
-            <section className="panel" style={{ background: 'var(--surface)', backdropFilter: 'var(--surface-blur)', borderRadius: 'var(--r)', padding: '32px', boxShadow: 'var(--shadow-sm)' }}>
-              <div className="panel-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '24px' }}>
+            <section className="panel">
+              <div className="panel-head">
                 <h2 id="mktName" style={{ fontFamily: 'var(--serif)', fontSize: '24px', fontWeight: 400 }}>Market</h2>
                 <span className="sub" id="marketUtil" style={{ fontSize: '13px', color: 'var(--ink-3)' }}></span>
               </div>
@@ -111,13 +111,13 @@ export default function BorrowPage() {
             </section>
 
             {/* act */}
-            <section className="panel" id="tradePanel" style={{ background: 'var(--surface)', backdropFilter: 'var(--surface-blur)', borderRadius: 'var(--r)', padding: '32px', boxShadow: 'var(--shadow-sm)' }}>
-              <div className="panel-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <section className="panel" id="tradePanel">
+              <div className="panel-head">
                 <h2 style={{ fontFamily: 'var(--serif)', fontSize: '24px', fontWeight: 400 }}>Act</h2>
                 <span className="sub">
-                  <span className="tabs" style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.5)', padding: '4px', borderRadius: '999px' }}>
-                    <button onClick={() => setActiveTab('borrow')} className={`btn ${activeTab === 'borrow' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: activeTab === 'borrow' ? '' : 'transparent', color: activeTab === 'borrow' ? '' : 'var(--ink-2)' }}>Borrow</button>
-                    <button onClick={() => setActiveTab('lend')} className={`btn ${activeTab === 'lend' ? 'btn-primary' : ''}`} style={{ padding: '6px 16px', fontSize: '13.5px', background: activeTab === 'lend' ? '' : 'transparent', color: activeTab === 'lend' ? '' : 'var(--ink-2)' }}>Lend</button>
+                  <span className="tabs">
+                    <button onClick={() => setActiveTab('borrow')} className={activeTab === 'borrow' ? 'active' : ''}>Borrow</button>
+                    <button onClick={() => setActiveTab('lend')} className={activeTab === 'lend' ? 'active' : ''}>Lend</button>
                   </span>
                 </span>
               </div>

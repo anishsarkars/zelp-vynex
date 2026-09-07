@@ -681,7 +681,53 @@ em { font-style: italic; }
 .vault-asset b { display: block; font-size: 15px; color: var(--ink); }
 .vault-asset small { display: block; font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
 
-/* ---------- responsive ---------- */
+/* ---------- panels & tabs ---------- */
+.panel {
+  background: var(--surface);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
+  border-radius: var(--r);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.panel-head h2 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: rgba(255,255,255,0.08);
+  padding: 4px;
+  border-radius: 999px;
+}
+.tabs button {
+  padding: 6px 16px;
+  font-size: 13.5px;
+  border-radius: 999px;
+  color: var(--ink-2);
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tabs button.active {
+  background: var(--green-deep);
+  color: #fff;
+}
+.tabs button:hover:not(.active) {
+  color: var(--ink);
+  background: rgba(255,255,255,0.05);
+}
 @media (max-width: 1000px) {
   .feat, .steps { grid-template-columns: 1fr 1fr; }
   .pipe, .sec-grid { grid-template-columns: 1fr 1fr; }
@@ -704,4 +750,8 @@ em { font-style: italic; }
   .wide-only { display: none !important; }
   .vault-asset b { font-size: 14px; }
   .vault-asset small { font-size: 12px; max-width: 120px; }
+  .panel { padding: 20px 16px; }
+  .panel-head { flex-direction: column; align-items: stretch; gap: 16px; margin-bottom: 20px; }
+  .tabs { width: 100%; display: flex; }
+  .tabs button { flex: 1; text-align: center; }
 }
