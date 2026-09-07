@@ -37,6 +37,8 @@ const VAULT_ABI = [
   "function harvester() view returns (address)",
   "function target() view returns (address)",
   "function convertToAssets(uint256) view returns (uint256)",
+  "function deposit(uint256 assets, address receiver) returns (uint256)",
+  "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
 ];
 
 const ERC20_ABI = [
@@ -44,6 +46,8 @@ const ERC20_ABI = [
   "function name() view returns (string)",
   "function decimals() view returns (uint8)",
   "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
 ];
 
 export function getProvider() {

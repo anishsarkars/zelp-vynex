@@ -3,8 +3,23 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
 
+import { ethers } from 'ethers';
+import { connectWallet } from '@/lib/web3';
+
 export default function BorrowPage() {
   const [activeTab, setActiveTab] = useState<'borrow' | 'lend'>('borrow');
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [signer, setSigner] = useState<ethers.JsonRpcSigner | null>(null);
+
+  async function handleConnect() {
+    try {
+      const c = await connectWallet();
+      setWalletAddress(c.address);
+      setSigner(c.signer);
+    } catch(e: any) {
+      alert(e.message);
+    }
+  }
 
   return (
     <>
@@ -27,11 +42,14 @@ export default function BorrowPage() {
           </nav>
 
           <div className="nav-cta">
-
             <a className="nav-x" href="https://x.com/tryzelp" aria-label="Zelp on X" title="Zelp on X" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.65l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25h6.816l4.713 6.231 5.461-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
             </a>
-            <button className="btn btn-primary">Connect wallet</button>
+            {walletAddress ? (
+              <span className="btn btn-line" id="walletChip">{walletAddress.substring(0, 6)}...{walletAddress.substring(38)}</span>
+            ) : (
+              <button className="btn btn-primary" onClick={handleConnect}>Connect wallet</button>
+            )}
           </div>
         </div>
       </header>
