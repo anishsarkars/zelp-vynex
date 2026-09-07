@@ -1,24 +1,32 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
-
 import { ethers } from 'ethers';
-import { connectWallet } from '@/lib/web3';
+import { useWeb3ModalProvider, useWeb3ModalAccount, useWeb3Modal } from '@web3modal/ethers/react';
 
 export default function BorrowPage() {
   const [activeTab, setActiveTab] = useState<'borrow' | 'lend'>('borrow');
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [signer, setSigner] = useState<ethers.JsonRpcSigner | null>(null);
 
-  async function handleConnect() {
-    try {
-      const c = await connectWallet();
-      setWalletAddress(c.address);
-      setSigner(c.signer);
-    } catch(e: any) {
-      alert(e.message);
+  const { open } = useWeb3Modal();
+  const { address, isConnected } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+
+  useEffect(() => {
+    if (isConnected && walletProvider) {
+      setWalletAddress(address as string);
+      const ethersProvider = new ethers.BrowserProvider(walletProvider as any);
+      ethersProvider.getSigner().then(setSigner);
+    } else {
+      setWalletAddress(null);
+      setSigner(null);
     }
+  }, [isConnected, walletProvider, address]);
+
+  async function handleConnect() {
+    await open();
   }
 
   return (

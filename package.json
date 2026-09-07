@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@web3modal/ethers": "^5.1.11",
     "clsx": "^2.1.1",
     "ethers": "^6.17.0",
     "framer-motion": "^13.1.1",

@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+import { Web3ModalProvider } from "@/context/Web3Modal";
+
+export default function RootLayout({ children }: any) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -32,7 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className={`${inter.variable}`} suppressHydrationWarning>
-        {children}
+        <Web3ModalProvider>
+          {children}
+        </Web3ModalProvider>
       </body>
     </html>
   );

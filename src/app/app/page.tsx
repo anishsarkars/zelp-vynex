@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { listVaults, connectWallet, VaultData } from '@/lib/web3';
+import { listVaults, VaultData } from '@/lib/web3';
+import { useWeb3ModalProvider, useWeb3ModalAccount, useWeb3Modal } from '@web3modal/ethers/react';
 import { APP_CONFIG } from '@/lib/config';
 import Link from 'next/link';
 import BackgroundVideo from '@/components/BackgroundVideo';
@@ -21,6 +22,21 @@ export default function AppPage() {
   const [txPending, setTxPending] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
 
+  const { open } = useWeb3Modal();
+  const { address, isConnected } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+
+  useEffect(() => {
+    if (isConnected && walletProvider) {
+      setWalletAddress(address as string);
+      const ethersProvider = new ethers.BrowserProvider(walletProvider as any);
+      ethersProvider.getSigner().then(setSigner);
+    } else {
+      setWalletAddress(null);
+      setSigner(null);
+    }
+  }, [isConnected, walletProvider, address]);
+
   useEffect(() => {
     async function load() {
       try {
@@ -38,13 +54,7 @@ export default function AppPage() {
   }, [walletAddress]);
 
   async function handleConnect() {
-    try {
-      const c = await connectWallet();
-      setWalletAddress(c.address);
-      setSigner(c.signer);
-    } catch(e: any) {
-      alert(e.message);
-    }
+    await open();
   }
 
   async function handleDeposit() {
