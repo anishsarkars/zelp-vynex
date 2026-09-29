@@ -32,7 +32,7 @@ export default function ZelpLanding() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('Not launched');
+    navigator.clipboard.writeText('0x070f0249d81785445EBD049c69B10AA882c4bc87');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -108,7 +108,7 @@ export default function ZelpLanding() {
 
             <div className="ca-chip" onClick={handleCopy} role="button" tabIndex={0} suppressHydrationWarning>
               <span className="ca-label">CA</span>
-              <span className="ca-value">Not launched</span>
+              <span className="ca-value">0x070f0249d81785445EBD049c69B10AA882c4bc87</span>
               <span className="ca-copy">{copied ? 'Copied!' : 'Copy'}</span>
             </div>
           </div>
