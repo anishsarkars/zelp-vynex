@@ -184,7 +184,7 @@ cast send $FACTORY "createVault(address,string,string)" \
       <footer className="footer">
         <div className="wrap foot-bottom" style={{ marginTop: 0, borderTop: 0 }}>
           <span>© 2026 Zelp. Experimental software. Not investment advice.</span>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: 12 }}>CA: Not launched</span>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: 12 }}>CA: 0x070f0249d81785445EBD049c69B10AA882c4bc87</span>
         </div>
       </footer>
     </>
